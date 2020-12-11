@@ -12,16 +12,16 @@ from random import randint                     # For RNG fruit placement
 
 class Board:
     """Represents the game board. Class handles the board and the fruit"""
-    BOARD_WIDTH = 60       # X values
-    BOARD_HEIGHT = 20      # Y values
     FRUIT_CHAR = "@"
 
-    fruit_position = [randint(1, BOARD_WIDTH - 2), randint(1, BOARD_HEIGHT - 2)]
 
-    def __init__(self, window):
+    def __init__(self, window, height, width):
         """
         :param window: the window object that the game creates
         """
+        self.BOARD_WIDTH = width       # X values
+        self.BOARD_HEIGHT = height      # Y values
+        self.fruit_position = [randint(1, self.BOARD_WIDTH - 2), randint(1, self.BOARD_HEIGHT - 2)]
         self.window = window
 
     def display_fruit(self):

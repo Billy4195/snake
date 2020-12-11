@@ -16,17 +16,18 @@ curses.initscr()                                # Starts screen
 curses.noecho()                                 # Hides the keyboard input from the terminal
 curses.curs_set(0)
 
+WIN_HEIGHT = 30
+WIN_WIDTH = 100
 
 def main():
-    draw_start_window()
-    game_mode = draw_option_select_window()     # Draws the option screen and assigns the value received to game_mode
-    snake_game = Game(game_mode)
+    draw_start_window(WIN_HEIGHT, WIN_WIDTH)
+    snake_game = Game(True, height=WIN_HEIGHT, width=WIN_WIDTH)
 
     while not snake_game.is_game_over():
         snake_game.run_game()
 
     snake_game.end_window()
-    draw_game_over_window(snake_game.get_game_score())
+    draw_game_over_window(snake_game.get_game_score(), WIN_HEIGHT, WIN_WIDTH)
 
 if __name__ == "__main__":
     main()

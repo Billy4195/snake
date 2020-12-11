@@ -16,13 +16,9 @@ class Snake:
     RIGHT_KEY = ord("d")
     QUIT_KEY = ord("q")
     PAUSE_KEY = ord(" ")
-    SEGMENT_CHAR = "#"
+    SEGMENT_CHAR = "*"
     INITIAL_LENGTH = 3
-    STARTING_X = 30
-    STARTING_Y = 9
 
-    snake_position = [STARTING_X, STARTING_Y]
-    snake_body = [snake_position[:]] * INITIAL_LENGTH
     key = None
     game_over = False
     last_valid_key = None
@@ -36,6 +32,8 @@ class Snake:
         self.window = window
         self.board_width = width
         self.board_height = height
+        self.snake_position = [self.board_width//2, self.board_height//2]
+        self.snake_body = [self.snake_position[:]] * self.INITIAL_LENGTH
 
     # TODO move the user input to the game class and pass in the key to this function
     def move_position(self):

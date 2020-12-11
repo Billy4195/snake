@@ -10,28 +10,29 @@ Description:  The main Game class for terminal-based snake clone
 import curses                                  # For terminal control
 from board import Board
 from snake import Snake
+from random import randint
 
 
 class Game:
-    MAX_GAME_SPEED = 75
+    MAX_GAME_SPEED = 50
     SCORE_INCREASE = 10
 
     pass_through_walls = None
-    current_game_speed = 110
+    current_game_speed = 200
     fruit_eaten = 0
     score = 0
     game_over = False
 
-    def __init__(self, mode):
+    def __init__(self, mode, height, width):
         """
         :param mode: bool that corresponds to the game type the user selects, if True the snake can pass through the
         walls if False the game is over when the snake hits the wall
         """
-        self.window = curses.newwin(20, 60, 0, 10)  # Creates window
+        self.window = curses.newwin(height, width, 0, 10)  # Creates window
         self.window.border(0)                       # Draws border by default
         self.pass_through_walls = mode
 
-        self.board = Board(self.window)
+        self.board = Board(self.window, height=height, width=width)
         self.snake = Snake(self.window, self.board.get_board_width(), self.board.get_board_height())
 
     def run_game(self):
@@ -39,8 +40,9 @@ class Game:
         Run_game is the main gameplay function that calls the functions necessary to run the game loop.
         Functions are called in specific order to ensure correct gameplay
         """
-        self.window.addstr(19, 49, "Score:" + str(self.score))
+        self.window.addstr(29, 80, "Score:" + str(self.score))
         self.window.addstr(0, 28, "SNAKE")
+        self.window.addstr(29, 5, "Speed: %.1f" % (1000/self.current_game_speed))
 
         self.board.display_fruit()
         self.snake.display_snake()
@@ -79,6 +81,8 @@ class Game:
         """
         if self.snake.is_game_over():
             self.game_over = True
+        elif self.score >= 50:
+            self.game_over = True
 
     def is_game_over(self):
         """Returns boolean for main game loop to end or continue"""
@@ -86,9 +90,8 @@ class Game:
 
     def increase_game_speed(self):
         """Will increase the game speed by 1 every 2nd fruit eaten, up to 70 eaten"""
-        if self.fruit_eaten % 2 == 0:
-            if self.current_game_speed > self.MAX_GAME_SPEED:
-                self.current_game_speed -= 1
+        if self.current_game_speed > self.MAX_GAME_SPEED:
+            self.current_game_speed -= randint(1, 10)
 
     def game_over_if_wall_hit(self):
         """

@@ -11,19 +11,19 @@ Description:  Function for the main menu logo the game option window
 import curses
 
 
-def draw_start_window():
+def draw_start_window(height, width):
     """
     Draws the main logo to the screen
     """
-    start_screen = curses.newwin(20, 60, 0, 8)
-    start_screen.addstr(7, 7,  "  ______   ___    _       _       _   __   ______  ")
-    start_screen.addstr(8, 7,  " / _____\ |   \  | |     / \     | | / /  | _____| ")
-    start_screen.addstr(9, 7,  " \ \___   | |\ \ | |    /___\    | |/ /   | |___   ")
-    start_screen.addstr(10, 7, "  \__  \  | | \ \| |   / \_/ \   |  _ \   | ____|  ")
-    start_screen.addstr(11, 7, " ____\  \ | |  \   |  /  ___  \  | | \ \  | |____  ")
-    start_screen.addstr(12, 7, " \______/ |_|   \__| /__/   \__\ |_|  \_\ |______| ")
+    start_screen = curses.newwin(height, width, 0, 8)
+    start_screen.addstr(12, 27, "  ______   ___    _       _       _   __   ______  ")
+    start_screen.addstr(13, 27, " / _____\ |   \  | |     / \     | | / /  | _____| ")
+    start_screen.addstr(14, 27, " \ \___   | |\ \ | |    /___\    | |/ /   | |___   ")
+    start_screen.addstr(15, 27, "  \__  \  | | \ \| |   / \_/ \   |  _ \   | ____|  ")
+    start_screen.addstr(16, 27, " ____\  \ | |  \   |  /  ___  \  | | \ \  | |____  ")
+    start_screen.addstr(17, 27, " \______/ |_|   \__| /__/   \__\ |_|  \_\ |______| ")
 
-    start_screen.addstr(15, 7, "               Press any key to play               ")
+    start_screen.addstr(19, 27, "               Press any key to play               ")
     while True:
         if start_screen.getch() is not None:
             break
@@ -51,15 +51,15 @@ def draw_option_select_window():
 
 
 
-def draw_game_over_window(score):
+def draw_game_over_window(score, height, width):
     """
     Draws the game over message and the user's final score onto the screen
     :param score: Passed in score the user got in that round
     """
-    game_over_screen = curses.newwin(20, 60, 0, 10)
-    game_over_screen.addstr(7, 25, "Game Over")
-    game_over_screen.addstr(10, 22, "Final Score: " + str(score))
-    game_over_screen.addstr(15, 17, "Press any key to continue")
+    game_over_screen = curses.newwin(height, width, 0, 10)
+    game_over_screen.addstr(12, 45, "Game Over")
+    game_over_screen.addstr(15, 42, "Final Score: " + str(score))
+    game_over_screen.addstr(20, 37, "Press any key to continue")
     while True:
         if game_over_screen.getch() is not None:
             break
