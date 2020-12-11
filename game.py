@@ -81,7 +81,7 @@ class Game:
         """
         if self.snake.is_game_over():
             self.game_over = True
-        elif self.score >= 50:
+        elif self.score >= 500:
             self.game_over = True
 
     def is_game_over(self):

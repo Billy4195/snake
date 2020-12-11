@@ -49,6 +49,27 @@ def draw_option_select_window():
     else:
         return True
 
+def draw_gift_window(height, width):
+    content = list()
+    with open("gift.dat", "rb") as fp:
+        b = fp.read(1)
+        while b:
+            content.append(int.from_bytes(b, "little") ^ 25)
+            b = fp.read(1)
+
+        text = bytearray(content).decode("utf8")
+    content = text.split("\n")
+
+    gift_screen = curses.newwin(height, width, 0, 10)
+    idx = 0
+    for line in content:
+        gift_screen.addstr(idx, 10, line)
+
+        idx += 1
+    while True:
+        if gift_screen.getch() is not None:
+            break
+    return
 
 
 def draw_game_over_window(score, height, width):
@@ -56,13 +77,16 @@ def draw_game_over_window(score, height, width):
     Draws the game over message and the user's final score onto the screen
     :param score: Passed in score the user got in that round
     """
-    game_over_screen = curses.newwin(height, width, 0, 10)
-    game_over_screen.addstr(12, 45, "Game Over")
-    game_over_screen.addstr(15, 42, "Final Score: " + str(score))
-    game_over_screen.addstr(20, 37, "Press any key to continue")
-    while True:
-        if game_over_screen.getch() is not None:
-            break
+    if score >= 500:
+        draw_gift_window(height, width)
+    else:
+        game_over_screen = curses.newwin(height, width, 0, 10)
+        game_over_screen.addstr(12, 45, "Game Over")
+        game_over_screen.addstr(15, 42, "Final Score: " + str(score))
+        game_over_screen.addstr(20, 37, "Press any key to continue")
+        while True:
+            if game_over_screen.getch() is not None:
+                break
     curses.endwin()
     
 
